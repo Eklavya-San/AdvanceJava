@@ -1,0 +1,50 @@
+package tester;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Scanner;
+
+import DAL.BookDALImpementation;
+import pojo.Book;
+import utils.DButils;
+
+public class Library {
+    public static void main (String [] meow) throws SQLException {
+    	
+    	try {
+			DButils.OpenConnection();
+			System.out.println("1.Show all Books\n"
+					+ "2.Add New Book\n"
+					+ "3.Update Book Data\n"
+					+ "4.Delete Book\n"
+					+ "5.Exit");
+			
+			BookDALImpementation bookDal = new BookDALImpementation();
+			Scanner sc = new Scanner (System.in);
+			boolean exit = false;
+			while(!exit) {
+				System.out.println("Enter your choice ");
+				switch(sc.nextInt()) {
+				case 1:
+					List<Book> list = bookDal.getAllBooks();
+					list.forEach(iterator -> System.out.println(iterator));
+					break;
+				case 2:
+					break;
+				case 5:
+					exit=true;
+					System.out.println("Exited Application");
+					break;
+				default:
+					System.out.println("Enter right choice");
+					break;
+				}
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+}

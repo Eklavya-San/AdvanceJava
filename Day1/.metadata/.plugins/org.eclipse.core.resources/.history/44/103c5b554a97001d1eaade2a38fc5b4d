@@ -1,0 +1,30 @@
+package tester;
+
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import DAL.BookDALImpementation;
+import utils.DButils;
+
+public class Library {
+    public static void main (String [] meow) throws SQLException {
+    	
+    	try {
+			DButils.OpenConnection();
+			System.out.println("1.Show all Books\n"
+					+ "2.Add New Book\n"
+					+ "3.Update Book Data\n"
+					+ "4.Delete Book\n"
+					+ "5.Exit");
+			
+			BookDALImpementation bookDal = new BookDALImpementation();
+			int choice = 0;
+			Scanner sc = new Scanner (System.in);
+			boolean exit = false;
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+}

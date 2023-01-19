@@ -1,0 +1,46 @@
+package DAL;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import pojo.Book;
+import DAL.BookDAL;
+import utils.DButils;
+
+public class BookDALImpementation {
+	private Connection con;//connection variable 
+	private Statement stmt;//statement variable which can read only data (select and retrive data queries)
+	private ResultSet rst;//data retrived and stored in this variable 
+	private PreparedStatement pstmt1,pstmt2,pstmt3; // variable in which you can use update create delete queries
+	
+	public BookDALImpementation  () throws  SQLException{
+		con=DButils.getConnection();//connection created
+		stmt = con.createStatement();
+		System.out.println("Statement created for static sql");
+		String queryInsert= "insert into books values(?,?,?,?)";
+		pstmt1=con.prepareStatement(queryInsert);
+		String queryUpdate = "update books set title=?,author=?,price=? where bookid=?";
+		pstmt2=con.prepareStatement(queryUpdate);
+		String queryDelete = "delete form books where bookid=?";
+		pstmt3=con.prepareStatement(queryDelete);
+		
+		System.out.println("Statement created for dynamic sql");
+		System.out.println("Book dal created");
+				
+	}
+	@Override
+	public List<Book> getAllBooks(){
+		try {
+			List <Book> allBooks = new ArrayList<Book>();
+			
+			return allBooks;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+	}
+	
+	
+}

@@ -1,0 +1,19 @@
+package DAL;
+
+import java.sql.*;
+
+import DAL.BookDAL;
+import utils.DButils;
+
+public class BookDALImpementation {
+	private Connection con;
+	private Statement stmt;
+	private ResultSet rst;
+	private PreparedStatement pstmt1,pstmt2,pstmt3;
+	
+	public BookDALImpementation  () throws  SQLException{
+		con=DButils.getConnection();
+	}
+	
+	
+}

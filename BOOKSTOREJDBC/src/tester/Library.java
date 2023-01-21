@@ -1,0 +1,77 @@
+package tester;
+
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Scanner;
+
+import DAL.BookDALImpementation;
+import pojo.Book;
+import utils.DButils;
+
+public class Library {
+    public static void main (String [] meow) throws SQLException {
+    	
+    	try {
+			DButils.OpenConnection();
+			System.out.println("1.Show all Books\n"
+					+ "2.Add New Book\n"
+					+ "3.Update Book Data\n"
+					+ "4.Delete Book\n"
+					+ "5.Exit");
+			
+			BookDALImpementation bookDal = new BookDALImpementation();
+			Scanner sc = new Scanner (System.in);
+			boolean exit = false;
+			while(!exit) {
+				System.out.println("Enter your choice ");
+				switch(sc.nextInt()) {
+				case 1:
+					List<Book> list = bookDal.getAllBooks();
+					list.forEach(iterator -> System.out.println(iterator));
+					break;
+				case 2:
+					System.out.println("Enter Book id , Name of book, Name of Author");
+					Book newBook = new Book(sc.nextInt(), sc.nextLine(), sc.nextLine());
+					int i = bookDal.addBook(newBook);
+					if(i>0) {
+						System.out.println("Inserted");
+					}else {
+						System.out.println("Error");
+					}
+					break;
+				case 3:
+					System.out.println("Update Book details: Bookid,new Title,new Author");
+					newBook= new Book(sc.nextInt(),sc.nextLine(),sc.nextLine());
+					i = bookDal.updateBook(newBook);
+					if(i>0) {
+						System.out.println("Updated");
+					}
+					
+					break;
+				case 4:
+					System.out.println("Delete Book Details Enter id of book");
+					int id = sc.nextInt();
+					i = bookDal.deleteBook(id);
+					if(i>0) {
+						System.out.println("Deleted Book details");
+					}else {
+						System.out.println("Book not found");
+					}
+					break;
+				case 5:
+					exit=true;
+					System.out.println("Exited Application");
+					break;
+				default:
+					System.out.println("Enter right choice");
+					break;
+				}
+			}
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+}

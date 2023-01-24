@@ -1,2 +1,4 @@
-package pojo;public enum Role {
+package pojo;
+
+public enum Role {
 }

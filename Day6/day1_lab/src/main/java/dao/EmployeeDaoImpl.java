@@ -10,6 +10,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 	public String addEmpDetails(Employee newEmp) {
 		// TODO Auto-generated method stub
 		//1.get Session from SF (session factory)
+		String mesg = "Added emp failed";
 		Session session = getFactory().getCurrentSession();
 		Transaction tx =session.beginTransaction();
 		try {
@@ -17,7 +18,7 @@ public class EmployeeDaoImpl implements EmployeeDao{
 			//HibernateException 
 			Long empId = (Long)session.save(newEmp);
 			tx.commit();
-			String mesg = "Added emp details ,Id = "+empId;
+			mesg = "Added emp details ,Id = "+empId;
 		} catch (RuntimeException e) {
 			if(tx!=null) {
 				tx.rollback();

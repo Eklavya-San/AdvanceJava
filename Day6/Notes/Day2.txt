@@ -1,0 +1,82 @@
+2.Hibernate seession Api for daata retrieval by pk {
+
+    api (method ) of org.hibernate.session 
+    public <T> T get (Class <T> c , Serializable id ) throws HibernateException
+    T -- type of pojo
+    returns null if id is not found 
+    returns presistent pojo ref if id is found
+}
+
+Hibernate pojo states - {
+    tansient 
+    presistent
+    detached
+}
+
+Hql (hibernate query language ) JPQl ( Java Persistene Query language)
+{
+    Database independent queries 
+    Hibernate will will convert JPQL  to Database sql queries
+    - in JPQL / hql table names will replaced by pojo class names 
+        and coloumn names are replaced by pojo properties namees ,
+        in case sensitive manner
+}
+[queries are case sensitive]
+sql : select * from users_tbl
+hql : form users
+jpql : select u from User u
+u : pojo reference or alias
+
+- create query object => from session interface 
+    <T> org.hiberante.query.Query<T>createQuery(String jpql,hql,Class<T> resultType)
+    T => result type
+
+
+-- Execute Query 
+    Query interface method 
+    public LIst<T>getResultList() throws HibernateException 
+    => Returns list PERSISTENT entities
+    NOTE: getResultList() 's results are not cached in L1 cache  To enable caching => enable L1 cache n then enable Query level cache.
+
+    if you want get only one result  =>
+        <T> T getSingleResult()
+        Excecutes a select query that returns a single result.
+        returns - returns a single instance (presistent ) that matched the query
+
+            throws -=>
+            NoResultsException - if there is no result 
+            NonUniqueResultException - if more than one result
+            IllegalStateException - if called for JPQL UPDATE or DELETE statement
+
+-- Display all uusers registerd between start date and end date and under a specific role 
+inpunt - begin date end date role 
+    => sql = select * from users where reg_date between ? and ? and user_role =?
+        jpql = select u from User u  wehre u.regDate between : start_date and end_date and u.userRole="role
+
+    Passing named IN params to the query qyery interface method 
+    public Query<T> setParameter (String paramName, Object value) throw  HibernateException
+
+
+
+incase of new solution lifting multiple details multiple coloumns multiple properties instead of using list of object array  use =>constructor expression 
+
+
+    e.g jqpl = "select new pojos.User(lastName,reAmount,regDAte)from user u where u.regDAte between : start and end and userRole=:rl";
+
+        pre requisite : Mateching constructor in pojo class 
+
+Updating pohos => cab ve dibe eutger wutg select follwed by update or onlyy with update queries ()
+    Reduce price of all books with autor = specified autor, publicsed befoe a specidic date 
+        jqpl => "update BokPOJO b set b.price =b.price :discount where b.author =:author and b.publishDate<:date"
+
+    This aproach is typically not recommeded often since it bypasses L1 cache. Cascading is not suppoted. Doesn't support optismitic locking directly. 
+        Use case -- for bulk updations to be performed on standalone (unrealted ) table)
+
+        If multiple users try to access same resource on the same time like booking same ticket on same time that is concurrency 
+
+    Delete Operations : 
+        API of org.hibernate.Session 
+            void delete(object o ) throws HibernateExceptino
+                input -- presistent POHO refernece 
+
+                

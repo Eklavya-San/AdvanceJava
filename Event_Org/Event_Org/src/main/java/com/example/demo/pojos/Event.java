@@ -1,4 +1,4 @@
-package com.example.pojos;
+package com.example.demo.pojos;
 
 import jakarta.persistence.*;
 import lombok.*;

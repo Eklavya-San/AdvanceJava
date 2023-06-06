@@ -11,16 +11,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 @MappedSuperclass
-
 @Getter
 @Setter
 @ToString
-public class BaseEntity {
-	
+public class BaseEntity {	
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
-
-
-
 }
